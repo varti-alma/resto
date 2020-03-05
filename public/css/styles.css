@@ -1,0 +1,34 @@
+.user-row{
+  margin: .5rem 0rem 1rem 0rem;
+  padding: 1rem 0rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fefefe;
+}
+.label-gender{
+  /*
+  position: absolute;
+  right: 2rem;
+  */
+  color: white;
+  padding: .5rem;
+  padding-top: .05rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+}
+.bg-blue{ background-color: #5a84ab !important; }
+.bg-red{ background-color: #b50956 !important; }
+.bg-grey{ background-color: gray !important; }
+
+.label-place{
+  /*
+  position: absolute;
+  right: 2rem;
+  */
+  color: white;
+  background-color: #4c937b;
+  padding: .5rem;
+  padding-top: .05rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+}

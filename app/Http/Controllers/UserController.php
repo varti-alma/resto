@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Experience;
+use App\RestoType;
 
 class UserController extends Controller
 {
@@ -48,10 +50,13 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        if($user->user_type == '0')
-            return view('company/index', ['user'=>$user]);
-
-        return view('person/index', ['user'=>$user]);
+        $experience = Experience::all();
+        $resto_type = RestoType::all();
+            return view('person/index', [
+                'user' => $user,
+                'experience' => $experience,
+                'resto_type' => $resto_type
+            ]);
     }
 
     /**

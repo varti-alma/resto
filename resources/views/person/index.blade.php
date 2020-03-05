@@ -5,7 +5,9 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">Usuario</div>
+        <div class="card-header d-flex justify-content-between align-middle">
+            <span class="pt-1">Detalle</span>
+        </div>
         <div class="card-body">
           @if (session('status'))
               <div class="alert alert-success" role="alert">
@@ -20,7 +22,7 @@
               <label for="name" class="col-md-3 col-form-label text-md-left">Nombre</label>
 
               <div class="col-md-6">
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$user->name}}">
+                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$user->name}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
 
                 @error('name')
                   <span class="invalid-feedback" role="alert">
@@ -33,7 +35,7 @@
               <label for="surname" class="col-md-3 col-form-label text-md-left">Apellidos</label>
 
               <div class="col-md-6">
-                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{$user->surname}}">
+                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{$user->surname}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
 
                 @error('surname')
                   <span class="invalid-feedback" role="alert">
@@ -42,6 +44,22 @@
                 @enderror
               </div>
             </div>
+            @if($user->user_type === '1')
+              <div class="form-group row">
+                <label for="company_name" class="col-md-3 col-form-label text-md-left">Giro</label>
+
+                <div class="col-md-6">
+                  <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{$user->company_name}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}">
+
+                  @error('company_name')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                </div>
+              </div>
+            @endif
+
             <div class="form-group row">
               <label for="email" class="col-md-3 col-form-label text-md-left">Email</label>
 
@@ -54,7 +72,7 @@
               <label for="telephone" class="col-md-3 col-form-label text-md-left">Teléfono</label>
 
               <div class="col-md-6">
-                <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{$user->telephone}}">
+                <input id="telephone" type="text" class="form-control @error('telephone') is-invalid @enderror" name="telephone" value="{{$user->telephone}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
 
                 @error('telephone')
                   <span class="invalid-feedback" role="alert">
@@ -67,7 +85,7 @@
               <label for="document_id" class="col-md-3 col-form-label text-md-left">RUT</label>
 
               <div class="col-md-6">
-                <input id="document_id" type="text" class="form-control @error('document_id') is-invalid @enderror" name="document_id" value="{{$user->document_id}}">
+                <input id="document_id" type="text" class="form-control @error('document_id') is-invalid @enderror" name="document_id" value="{{$user->document_id}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
 
                 @error('document_id')
                   <span class="invalid-feedback" role="alert">
@@ -80,7 +98,7 @@
               <label for="birthday" class="col-md-3 col-form-label text-md-left">Fecha de nacimiento</label>
 
               <div class="col-md-6">
-                <input id="birthday" type="text" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{$user->birthday}}">
+                <input id="birthday" type="text" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{$user->birthday}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
 
                 @error('birthday')
                   <span class="invalid-feedback" role="alert">
@@ -93,7 +111,7 @@
               <label for="gender" class="col-md-3 col-form-label text-md-left">Género</label>
 
               <div class="col-md-6">
-              <select id="gender" name="gender" class="form-control">
+              <select id="gender" name="gender" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
                 <option value="1" {{ ($user->gender == "1" ? "selected":"") }}>Hombre</option>
                 <option value="0" {{ ($user->gender == "0" ? "selected":"") }}>Mujer</option>
                 <option value="" {{ ($user->gender != "1" && $user->gender != "0" ? "selected":"") }}>No responde</option>
@@ -109,7 +127,7 @@
               <label for="region" class="col-md-3 col-form-label text-md-left">Región</label>
 
               <div class="col-md-6">
-              <select id="region" name="region" class="form-control">
+              <select id="region" name="region" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
                 @foreach(regionList() as $key => $region)
                   <option value={{$key}} {{ ($user->region == $key ? "selected":"") }}>{{$region}}</option>
                 @endforeach
@@ -121,11 +139,102 @@
                 @enderror
               </div>
             </div>
-            <button class="btn btn-primary" type="submit">Actualizar</button>
+            <div class="form-group row">
+              <label for="city" class="col-md-3 col-form-label text-md-left">Comuna</label>
+
+              <div class="col-md-6">
+              <select id="city" name="city" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
+                @foreach(cityList($user->region) as $key => $city)
+                  <option value={{$key}} {{ ($user->city == $key ? "selected":"") }}>{{$city}}</option>
+                @endforeach
+              </select>
+                @error('city')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-12 col-form-label text-md-left">Experiencias</label>
+              @foreach($experience as $key => $exp)
+                <div class="col-md-6" key="{{$key}}">
+                  <label class="col-form-label text-md-left col-md-6">{{$exp->description}}</label>
+                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-1" class="mr-2">1</label>
+                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-2" class="mr-2">2</label>
+                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-3" class="mr-2">3</label>
+                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-4" class="mr-2">4</label>
+                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-5" class="mr-2">5</label>
+
+                </div>
+              @endforeach
+            </div>
+            <div class="form-group row">
+              <label class="col-md-12 col-form-label text-md-left">Tipo restaurante</label>
+              @foreach($resto_type as $key => $resto)
+                <div class="col-md-4" key="{{$key}}">
+                  <label class="col-form-label text-md-left">
+                    <input type="checkbox" class="mr-2"
+                      name="resto-type-id[]"
+                      id="resto-type-id-{{$resto->resto_type_id}}"
+                      value="{{$resto->resto_type_id}}"
+                      {{checkedInput($resto->resto_type_id, $user->resto_type)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >
+                    {{$resto->description}}
+                  </label>
+                </div>
+              @endforeach
+              <div class="col-md-4" key="{{$key}}">
+                <label class="col-form-label text-md-left">
+                  <input type="checkbox" name="resto-type-id-other" id="-" class="mr-2"
+                  {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
+                  Otro
+                </label>
+                <input type="text" name="resto_type_other" id="resto_type_other" class="form-control"
+                {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
+              </div>
+            </div>
+
+            @if($user->user_type === '1')
+            <div class="form-group row">
+              <label class="col-md-12 col-form-label text-md-left">Horario atención</label>
+            </div>
+            @endif
+            <div class="text-center">
+              @if(disabledInput($user->id, Auth::user()->id))
+                <button class="btn btn-primary" type="submit">Actualizar</button>
+              @else
+                <a href="/home" class="btn btn-success">Volver</a>
+              @endif
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+@endsection
+@section('scripts')
+
+<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+<script>
+          $(document).ready(function(){
+            console.log('hola');
+            $('#region').change(function(){
+              debugger;
+                //Selected value
+                var inputValue = $(this).val();
+                alert("value in js "+inputValue);
+
+                //Ajax for calling php function
+                $.post('submit.php', { dropdownValue: inputValue }, function(data){
+                    alert('ajax completed. Response:  '+data);
+                    //do after submission operation in DOM
+                });
+            });
+        });
+        </script>
+
 @endsection

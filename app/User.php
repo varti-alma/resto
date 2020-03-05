@@ -57,8 +57,34 @@ class User extends Authenticatable
         'birthday' => $request['birthday'],
         'gender' => $request['gender'],
         'region' => $request['region'],
+        'city' => $request['city'],
+        'resto_type' => implode( ", ", array_values($request['resto-type-id']) ),
         'updated_at' => date("Y-m-d H:i:s"),
       ]);
+    }
+    /**
+     * get all users
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public static function getAllUser()
+    {
+      return DB::table('users')
+        ->where('user_type', '=', '0')
+        ->get();
+    }
+    /**
+     * get all restorants
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public static function getAllRestorants()
+    {
+      return DB::table('users')
+      ->where('user_type', '=', '1')
+      ->get();
     }
 
 }
