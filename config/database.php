@@ -1,6 +1,19 @@
 <?php
 
 use Illuminate\Support\Str;
+$url = parse_url('mysql://b67d2377225e97:f78a92b7@us-cdbr-iron-east-04.cleardb.net/heroku_45d31bc9bd5cde8?reconnect=true');
+
+if($url !== null){
+    $host = 'us-cdbr-iron-east-04.cleardb.net';
+    $username = 'b67d2377225e97';
+    $password = 'f78a92b7';
+    $database = 'heroku_45d31bc9bd5cde8';
+} else {
+    $host = env('DB_HOST', '127.0.0.1');
+    $username = env('DB_DATABASE', 'forge');
+    $password = env('DB_USERNAME', 'forge');
+    $database = env('DB_PASSWORD', '');
+}
 
 return [
 
@@ -46,11 +59,18 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
+            'host'      => $host,
+            'database'  => $database,
+            'username'  => $username,
+            'password'  => $password,
+            /*
             'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
+            */
+
+            'port' => env('DB_PORT', '3306'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
