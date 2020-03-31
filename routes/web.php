@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('users', 'UserController')->except([
     'index', 'store', 'destroy'
 ]);;
+
+Route::get('/getCity/{idRegion}', 'UserController@getCity')->name('getCity');

@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'surname', 'company_name', 'telephone', 'document_id', 'email', 'password',
         'region', 'city', 'availability', 'gender', 'birthday', 'schedule', 'address', 'user_type',
-        'state'
+        'state', 'experiences', 'resto_type'
     ];
 
     /**
@@ -47,8 +47,37 @@ class User extends Authenticatable
      */
     public static function edit($request, $id)
     {
+      $id_to_use = $id;
+      $experiencesList = [];
+      $experiences = $request;
+
+      if(array_key_exists('resto-type-id', $request)){
+        $resto_type_list = implode( ", ", array_values($request['resto-type-id']) );
+      }else{
+        $resto_type_list = "";
+      }
+
+      unset($experiences['_method']);
+      unset($experiences['_token']);
+      unset($experiences['name']);
+      unset($experiences['surname']);
+      unset($experiences['telephone']);
+      unset($experiences['document_id']);
+      unset($experiences['birthday']);
+      unset($experiences['gender']);
+      unset($experiences['region']);
+      unset($experiences['city']);
+      unset($experiences['resto-type-id']);
+      unset($experiences['resto_type_other']);
+
+      foreach($experiences as $key => $experience){
+        $key_split = explode("-",$key);
+        $id = $key_split[2];
+        $experiencesList[$id] = $experience[0];
+      }
+
       return $result = DB::table('users')
-      ->where('id', $id)
+      ->where('id', '=',$id_to_use)
       ->update([
         'name' => $request['name'],
         'surname' => $request['surname'],
@@ -58,7 +87,8 @@ class User extends Authenticatable
         'gender' => $request['gender'],
         'region' => $request['region'],
         'city' => $request['city'],
-        'resto_type' => implode( ", ", array_values($request['resto-type-id']) ),
+        'resto_type' => $resto_type_list,
+        'experiences' => implode( ", ", array_values($experiencesList) ),
         'updated_at' => date("Y-m-d H:i:s"),
       ]);
     }

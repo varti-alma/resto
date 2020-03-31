@@ -79,7 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $result = User::edit($request, $id);
+        $result = User::edit($request->all(), $id);
         $user = User::find($id);
         if($user->user_type == '0')
             return view('company/index', ['user'=>$user]);
@@ -97,5 +97,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCity($idRegion)
+    {
+        //
+        return cityList($idRegion);
     }
 }

@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('company_name', 100)->nullable();
             $table->string('telephone', 50)->nullable();
             $table->string('document_id', 20)->nullable();
-            $table->string('region', 20)->nullable();
-            $table->string('city', 20)->nullable();
+            $table->string('region', 100)->nullable();
+            $table->string('city', 100)->nullable();
             $table->string('email', 50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('availability')->nullable();

@@ -9,6 +9,7 @@
             <span class="pt-1">Detalle</span>
         </div>
         <div class="card-body">
+          <h5 class="col-md-12 text-md-left pl-0">Datos personales</h5>
           @if (session('status'))
               <div class="alert alert-success" role="alert">
                   {{ session('status') }}
@@ -123,11 +124,17 @@
                 @enderror
               </div>
             </div>
+
             <div class="form-group row">
               <label for="region" class="col-md-3 col-form-label text-md-left">Región</label>
 
               <div class="col-md-6">
-              <select id="region" name="region" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
+              <select
+                id="region"
+                name="region"
+                class="form-control"
+                {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+              >
                 @foreach(regionList() as $key => $region)
                   <option value={{$key}} {{ ($user->region == $key ? "selected":"") }}>{{$region}}</option>
                 @endforeach
@@ -139,14 +146,18 @@
                 @enderror
               </div>
             </div>
+
+
             <div class="form-group row">
               <label for="city" class="col-md-3 col-form-label text-md-left">Comuna</label>
 
               <div class="col-md-6">
               <select id="city" name="city" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
-                @foreach(cityList($user->region) as $key => $city)
-                  <option value={{$key}} {{ ($user->city == $key ? "selected":"") }}>{{$city}}</option>
-                @endforeach
+                @if($user->city !== "")
+                  @foreach(cityList($user->region) as $key => $city)
+                    <option value={{$key}} {{ ($user->city == $key ? "selected":"") }}>{{$city}}</option>
+                  @endforeach
+                @endif
               </select>
                 @error('city')
                   <span class="invalid-feedback" role="alert">
@@ -155,22 +166,74 @@
                 @enderror
               </div>
             </div>
+            @if($user->user_type !== '1')
             <div class="form-group row">
-              <label class="col-md-12 col-form-label text-md-left">Experiencias</label>
+              <h5 class="col-md-12 text-md-left">Experiencias</h5>
               @foreach($experience as $key => $exp)
                 <div class="col-md-6" key="{{$key}}">
                   <label class="col-form-label text-md-left col-md-6">{{$exp->description}}</label>
-                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-1" class="mr-2">1</label>
-                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-2" class="mr-2">2</label>
-                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-3" class="mr-2">3</label>
-                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-4" class="mr-2">4</label>
-                  <label for=""><input type="radio" name="experience-list-{{$key}}[]" id="experience-list-{{$key}}-5" class="mr-2">5</label>
+                  <label for="">
+                    <input
+                      type="radio"
+                      name="experience-list-{{$key}}[]"
+                      id="experience-list-{{$key}}-1"
+                      class="mr-2"
+                      value="{{$key}}-1"
+                      {{checkedInput($key.'-1', $user->experiences)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >1
+                  </label>
+                  <label for="">
+                    <input
+                      type="radio"
+                      name="experience-list-{{$key}}[]"
+                      id="experience-list-{{$key}}-2"
+                      class="mr-2"
+                      value="{{$key}}-2"
+                      {{checkedInput($key.'-2', $user->experiences)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >2
+                  </label>
+                  <label for="">
+                    <input
+                      type="radio"
+                      name="experience-list-{{$key}}[]"
+                      id="experience-list-{{$key}}-3"
+                      class="mr-2"
+                      value="{{$key}}-3"
+                      {{checkedInput($key.'-3', $user->experiences)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >3
+                  </label>
+                  <label for="">
+                    <input
+                      type="radio"
+                      name="experience-list-{{$key}}[]"
+                      id="experience-list-{{$key}}-4"
+                      class="mr-2"
+                      value="{{$key}}-4"
+                      {{checkedInput($key.'-4', $user->experiences)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >4
+                  </label>
+                  <label for="">
+                    <input
+                      type="radio"
+                      name="experience-list-{{$key}}[]"
+                      id="experience-list-{{$key}}-5"
+                      class="mr-2"
+                      value="{{$key}}-5"
+                      {{checkedInput($key.'-5', $user->experiences)}}
+                      {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                    >5
+                  </label>
 
                 </div>
               @endforeach
             </div>
+            @endif
             <div class="form-group row">
-              <label class="col-md-12 col-form-label text-md-left">Tipo restaurante</label>
+              <h5 class="col-md-12 text-md-left">Tipo restaurante</h5>
               @foreach($resto_type as $key => $resto)
                 <div class="col-md-4" key="{{$key}}">
                   <label class="col-form-label text-md-left">
@@ -216,25 +279,27 @@
 </div>
 
 @endsection
-@section('scripts')
+@yield('scripts')
 
 <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 <script>
-          $(document).ready(function(){
-            console.log('hola');
-            $('#region').change(function(){
-              debugger;
-                //Selected value
-                var inputValue = $(this).val();
-                alert("value in js "+inputValue);
+  const getRegion = async (idRegion) => {
+    console.log("Get Quote");
+    const api = await fetch('/getCity/'+idRegion);
+    const data = await api.json();
+    $("#city option").each(function() {
+      $(this).remove();
+    });
+    Object.keys(data).map((row) =>
+      $('#city').prepend("<option value='"+row+"' >"+data[row]+"</option>")
+    );
+    return data;
+  }
+  $(document).ready(function(){
+    $('#region').change(function(){
+        var inputValue = $(this).val();
+        getRegion(inputValue);
+    });
+  });
+</script>
 
-                //Ajax for calling php function
-                $.post('submit.php', { dropdownValue: inputValue }, function(data){
-                    alert('ajax completed. Response:  '+data);
-                    //do after submission operation in DOM
-                });
-            });
-        });
-        </script>
-
-@endsection
