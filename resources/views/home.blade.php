@@ -13,11 +13,17 @@
               <option value={{$key}}>{{$region}}</option>
             @endforeach
             </select>
-            <select id="city" name="city" class="form-control mt-3">
-              @foreach(cityList('I') as $key => $city)
-                <option value={{$key}}>{{$city}}</option>
-              @endforeach
-            </select>
+            <select id="city" name="city" class="form-control my-3"></select>
+            <label for="txtSkills">Filtros</label>
+            <input
+              type="text"
+              class="form-control"
+              id="txtSkills"
+              name="Skills"
+              data-role="tagsinput"
+              onKeyDown="return tab_btn(event);"
+            >
+            <div id="filter-list" class="mt-3"></div>
           </div>
         </div>
       </div>
@@ -30,23 +36,24 @@
 
         @if(count($userList) > 0)
           <div class="row ml-2">
-            <div class="col-1">
-              <input type="checkbox" name="user-selected" id="user-selected-all">
+            <div class="col-6">
+              <input type="checkbox" name="user-selected-all" id="user-selected-all">
+              <label for="user-selected-all" class="pl-4">Seleccionar todos</label>
             </div>
-            <div class="col-11 text-right pr-3">
+            <div class="col-6 text-right pr-3">
               <button class="btn btn-primary btn-sm"><i class="fas fa-envelope fa-xl mr-2"></i> Enviar por correo</button>
             </div>
           </div>
           @foreach($userList as $key => $user)
             <div class="row user-row">
               <div class="col-1 text-center">
-                <input type="checkbox" name="user-selected" id="user-selected-{{$key}}">
+                <input type="checkbox" name="user-selected" id="user-selected-{{$user->id}}">
               </div>
               <div class="row col-12 col-md-9 pl-0">
                 <div class="col-12"> {{($user->name != "" ? $user->name.' '.$user->surname : "Sin nombre" )}}
                   <label for="" class="label-place {{($user->city == "" ? 'bg-grey': '')}}">
                     <i class="fas fa-map-marker-alt fa-md mr-1"></i>
-                    {{($user->city != "" ? getCityName($user->city) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
+                    {{($user->city != "-" && $user->city != "" ? getCityName($user->city) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
                   </label>
                   <label for="" class="label-gender {{getGenderLabelColor($user->gender)}}">{{getGender($user->gender)}}
                 </div>
@@ -55,7 +62,7 @@
                 <div class="col-12 my-2"><i class="fas fa-utensils fa-md mr-2 text-secondary"></i>{{$user->resto_type}}</div>
               </div>
               <div class="col-12 col-md-2">
-                <a href="/users/{{$user->id }}" class="btn btn-primary">Ver</a>
+                <a href="/users/{{$user->id}}" class="btn btn-primary">Ver</a>
               </div>
             </div>
           @endforeach
@@ -69,3 +76,26 @@
   @endif
 </div>
 @endsection
+@yield('scripts')
+
+<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
+<script>
+  $(document).ready(function(){
+    $('#user-selected-all').change(function(){
+      if($('#user-selected-all').prop('checked')){
+        $("input[name='user-selected']").prop("checked", true);
+      }else{
+        $("input[name='user-selected']").prop("checked", false);
+      }
+    });
+    $('#selected_region_list').change(function(){
+        var inputValue = $(this).val();
+        getRegion(inputValue);
+    });
+  });
+  $(document).on('click', '.label-filter', function(e) {
+    $("#"+this.id).remove();
+  });
+</script>
+

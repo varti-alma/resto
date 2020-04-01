@@ -32,3 +32,19 @@
   height: 1.5rem;
   border-radius: 1rem;
 }
+
+.label-filter{
+  padding: .25rem;
+  font-size: .7875rem;
+  line-height: 1;
+  border-radius: .2rem;
+  color: #fff;
+  background-color: #3490dc;
+  border-color: #3490dc;
+  margin: .1rem .2rem;
+}
+
+.label-filter:hover {
+  background-color: #227dc7;
+  border-color: #2176bd;
+}

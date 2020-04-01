@@ -99,7 +99,15 @@
               <label for="birthday" class="col-md-3 col-form-label text-md-left">Fecha de nacimiento</label>
 
               <div class="col-md-6">
-                <input id="birthday" type="text" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{$user->birthday}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
+                <input
+                  id="birthday"
+                  type="text"
+                  class="form-control @error('birthday') is-invalid @enderror"
+                  name="birthday"
+                  value="{{$user->birthday}}"
+                  {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
+                  placeholder="YYYY-MM-DD"
+                >
 
                 @error('birthday')
                   <span class="invalid-feedback" role="alert">
@@ -166,7 +174,7 @@
                 @enderror
               </div>
             </div>
-            @if($user->user_type !== '1')
+            @if($user->user_type !== 1)
             <div class="form-group row">
               <h5 class="col-md-12 text-md-left">Experiencias</h5>
               @foreach($experience as $key => $exp)
@@ -282,19 +290,8 @@
 @yield('scripts')
 
 <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
 <script>
-  const getRegion = async (idRegion) => {
-    console.log("Get Quote");
-    const api = await fetch('/getCity/'+idRegion);
-    const data = await api.json();
-    $("#city option").each(function() {
-      $(this).remove();
-    });
-    Object.keys(data).map((row) =>
-      $('#city').prepend("<option value='"+row+"' >"+data[row]+"</option>")
-    );
-    return data;
-  }
   $(document).ready(function(){
     $('#region').change(function(){
         var inputValue = $(this).val();
