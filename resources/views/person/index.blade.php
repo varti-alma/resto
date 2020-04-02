@@ -256,13 +256,13 @@
                   </label>
                 </div>
               @endforeach
-              <div class="col-md-4" key="{{$key}}">
-                <label class="col-form-label text-md-left">
+              <div class="col-md-8 row" key="{{$key}}">
+                <label class="col-sm-3 col-form-label text-md-left mr-0">
                   <input type="checkbox" name="resto-type-id-other" id="-" class="mr-2"
                   {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
                   Otro
                 </label>
-                <input type="text" name="resto_type_other" id="resto_type_other" class="form-control"
+                <input type="text" name="resto_type_other" id="resto_type_other" class="form-control col-sm-9"
                 {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
               </div>
             </div>
