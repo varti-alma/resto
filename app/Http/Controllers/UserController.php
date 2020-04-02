@@ -52,11 +52,11 @@ class UserController extends Controller
         $user = User::find($id);
         $experience = Experience::all();
         $resto_type = RestoType::all();
-            return view('person/index', [
-                'user' => $user,
-                'experience' => $experience,
-                'resto_type' => $resto_type
-            ]);
+        return view('person/index', [
+            'user' => $user,
+            'experience' => $experience,
+            'resto_type' => $resto_type
+        ]);
     }
 
     /**
@@ -99,9 +99,9 @@ class UserController extends Controller
         //
     }
     /**
-     * Remove the specified resource from storage.
+     * Rescatar listado de ciudad según región informado
      *
-     * @param  int  $id
+     * @param  int  $idRegion
      * @return \Illuminate\Http\Response
      */
     public function getCity($idRegion)

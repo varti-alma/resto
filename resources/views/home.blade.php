@@ -8,12 +8,83 @@
         <div class="card">
           <div class="card-header">Filtros</div>
           <div class="card-body">
+            <form action="{{url('filterPeopleList')}}" method="POST">
+              {{method_field('PATCH')}}
+              @csrf
+
+
             <select name="selected_region" id="selected_region_list" class="form-control">
+              <option value='-'>Todos</option>
             @foreach(regionList() as $key => $region)
-              <option value={{$key}}>{{$region}}</option>
+              <option {{ ($param['selected_region'] == $key ? "selected":"") }} value={{$key}}>{{$region}}</option>
             @endforeach
             </select>
-            <select id="city" name="city" class="form-control my-3"></select>
+            <select id="city" name="city" class="form-control my-3">
+              <option value='-'>Todos</option>
+            </select>
+            <div class="form-inline">
+              <div class="form-group">
+                <label for="txtSearchExperience" class="mr-3 mb-3">Experiencias</label>
+                <!--
+                <input
+                  type="text"
+                  class="form-control"
+                  id="txtSearchExperience"
+                  name="txtSearchExperience"
+                  data-role="tagsinput"
+                  placeholder="Buscar"
+                  onKeyDown="return searchList(event, 'experience-list');"
+                >
+                -->
+              </div>
+            </div>
+            <div id="experience-list">
+            @foreach($experienceList as $key => $experience)
+              <div class={{'experience-div-'.$experience->experience_id}} key={{$key}}>
+                <input
+                  type="checkbox"
+                  class="experience-selected"
+                  id="experience-selected-{{$experience->experience_id}}"
+                  name="experience-selected-id[]"
+                  value="{{$experience->experience_id}}"
+                  {{checkedInputArray($experience->experience_id, $param, 'experience-selected-id')}}
+                >
+                <label for="experience-selected-{{$experience->experience_id}}" class="pl-4">{{$experience->description}}</label>
+              </div>
+            @endforeach
+            </div>
+            <div class="form-inline">
+              <div class="form-group">
+                <label for="txtSearchResto" class="mr-3 mb-3">Restaurantes</label>
+                <!--
+                <input
+                  type="text"
+                  class="form-control"
+                  id="txtSearchResto"
+                  name="txtSearchResto"
+                  data-role="tagsinput"
+                  placeholder="Buscar"
+                  onKeyDown="return searchList(event, 'txtSearchResto');"
+                >
+                -->
+              </div>
+            </div>
+            <div id="resto-list">
+            @foreach($restoTypeList as $key => $resto)
+              <div class="resto-div" key={{$key}}>
+                <input
+                  type="checkbox"
+                  class="resto-selected"
+                  id="resto-selected-{{$resto->id}}"
+                  name="resto-selected-id[]"
+                  value="{{$resto->resto_type_id}}"
+                  {{checkedInputArray($resto->resto_type_id, $param, 'resto-selected-id')}}
+                >
+                <label for="resto-selected-{{$resto->resto_type_id}}" class="pl-4">{{$resto->description}}</label>
+              </div>
+            @endforeach
+            </div>
+            <!--
             <label for="txtSkills">Filtros</label>
             <input
               type="text"
@@ -24,6 +95,8 @@
               onKeyDown="return tab_btn(event);"
             >
             <div id="filter-list" class="mt-3"></div>
+            -->
+            </form>
           </div>
         </div>
       </div>
@@ -44,6 +117,7 @@
               <button class="btn btn-primary btn-sm"><i class="fas fa-envelope fa-xl mr-2"></i> Enviar por correo</button>
             </div>
           </div>
+          <div id="user-list">
           @foreach($userList as $key => $user)
             <div class="row user-row">
               <div class="col-1 text-center">
@@ -66,8 +140,9 @@
               </div>
             </div>
           @endforeach
+          </div>
         @else
-          <h4 class="text-center">No hay usuarios registrados</h4>
+          <h4 class="text-center">No hay usuarios registrados con esas características</h4>
         @endif
       </div>
     </div>
@@ -92,6 +167,16 @@
     $('#selected_region_list').change(function(){
         var inputValue = $(this).val();
         getRegion(inputValue);
+        this.form.submit();
+    });
+    $('#city').change(function(){
+      this.form.submit();
+    });
+    $('.experience-selected').change(function(){
+      this.form.submit();
+    });
+    $('.resto-selected').change(function(){
+      this.form.submit();
     });
   });
   $(document).on('click', '.label-filter', function(e) {

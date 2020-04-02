@@ -117,4 +117,43 @@ class User extends Authenticatable
       ->get();
     }
 
+    /**
+     * filter People List
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public static function filterPeopleList($param)
+    {
+
+      $query = DB::table('users');
+
+      $query->select(['id', 'name', 'surname', 'company_name', 'telephone', 'document_id',
+      'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
+      'user_type', 'experiences', 'resto_type']);
+
+      if($param['city'] === '-'){
+        if($param['selected_region'] !== '-') {
+          $query->where('region', $param['selected_region']);
+        }
+      }else{
+        $query->where('city', $param['city']);
+      }
+      $query->where('user_type', '0');
+
+      if(array_key_exists('resto-selected-id', $param)){
+        foreach($param['resto-selected-id'] as $key => $resto){
+          $query->where('resto_type', 'like', '%'.$resto.'%');
+        }
+      }
+
+      if(array_key_exists('experience-selected-id', $param)){
+        foreach($param['experience-selected-id'] as $key => $experience){
+          $query->where('experiences', 'like', '%'.$experience.'-%');
+        }
+      }
+
+      return $query->get();
+  }
+
 }
