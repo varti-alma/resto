@@ -50,8 +50,8 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        $experience = Experience::all();
-        $resto_type = RestoType::all();
+        $experience = Experience::orderBy('description', 'ASC')->get();
+        $resto_type = RestoType::orderBy('description', 'ASC')->get();
         return view('person/index', [
             'user' => $user,
             'experience' => $experience,

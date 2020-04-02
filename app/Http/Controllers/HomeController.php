@@ -29,8 +29,8 @@ class HomeController extends Controller
     {
         $userLogged = Auth::user();
         $userList = User::getAllUser();
-        $experienceList = Experience::all();
-        $restoTypeList = RestoType::all();
+        $experienceList = Experience::orderBy('description', 'ASC')->get();
+        $restoTypeList = RestoType::orderBy('description', 'ASC')->get();
 
         foreach($userList as $key => $user){
             $userListUpdated[$key] = $user;
@@ -60,8 +60,8 @@ class HomeController extends Controller
         //exit;
         $userLogged = Auth::user();
         $userList = User::filterPeopleList($request->all());
-        $experienceList = Experience::all();
-        $restoTypeList = RestoType::all();
+        $experienceList = Experience::orderBy('description', 'ASC')->get();
+        $restoTypeList = RestoType::orderBy('description', 'ASC')->get();
         $userListUpdated = array();
         foreach($userList as $key => $user){
             $userListUpdated[$key] = $user;
