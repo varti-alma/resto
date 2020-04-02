@@ -33,7 +33,6 @@
       else
         return '';
     }
-    exit;
     return '';
   }
   function selectedInput($id, $idListString){
