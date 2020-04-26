@@ -69,6 +69,8 @@ class User extends Authenticatable
       unset($experiences['city']);
       unset($experiences['resto-type-id']);
       unset($experiences['resto_type_other']);
+      unset($experiences['file']);
+      unset($experiences['filename']);
 
       foreach($experiences as $key => $experience){
         $key_split = explode("-",$key);
@@ -88,6 +90,7 @@ class User extends Authenticatable
         'region' => $request['region'],
         'city' => $request['city'],
         'resto_type' => $resto_type_list,
+        'profile_photo' => $request['filename'],
         'experiences' => implode( ", ", array_values($experiencesList) ),
         'updated_at' => date("Y-m-d H:i:s"),
       ]);

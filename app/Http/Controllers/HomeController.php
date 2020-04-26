@@ -32,6 +32,7 @@ class HomeController extends Controller
         $experienceList = Experience::orderBy('description', 'ASC')->get();
         $restoTypeList = RestoType::orderBy('description', 'ASC')->get();
 
+        $userListUpdated = array();
         foreach($userList as $key => $user){
             $userListUpdated[$key] = $user;
             $resto_type = RestoType::getList($user->resto_type);

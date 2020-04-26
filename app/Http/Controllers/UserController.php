@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Experience;
 use App\RestoType;
@@ -79,12 +80,27 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $fileName = $id.'_'.rand().'.'.$request->file('file')->getClientOriginalExtension();
+        $request->file('file')->move(public_path('avatars'), $fileName );
+        $request['filename'] = $fileName;
         $result = User::edit($request->all(), $id);
         $user = User::find($id);
-        if($user->user_type == '0')
-            return view('company/index', ['user'=>$user]);
 
-        return view('person/index', ['user'=>$user]);
+        $experience = Experience::orderBy('description', 'ASC')->get();
+        $resto_type = RestoType::orderBy('description', 'ASC')->get();
+
+        if($user->user_type == '0')
+            return view('company/index', [
+                'user'=>$user,
+                'experience' => $experience,
+                'resto_type' => $resto_type
+            ]);
+
+        return view('person/index', [
+            'user'=>$user,
+            'experience' => $experience,
+            'resto_type' => $resto_type]
+        );
 
     }
 

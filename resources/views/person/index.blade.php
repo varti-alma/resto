@@ -16,9 +16,23 @@
               </div>
           @endif
 
-          <form action="{{url('users', [$user->id])}}" method="POST">
+          <form action="{{url('users', [$user->id])}}" method="POST" enctype="multipart/form-data">
             {{method_field('PATCH')}}
             @csrf
+            @if (disabledInput($user->id, Auth::user()->id))
+            <div class="form-group row">
+              <div class="col-md-3 align-middle">
+                @if($user->profile_photo === "")
+                  <p>No foto</p>
+                @else
+                  <img src="{{'/avatars/'.$user->profile_photo}}" width="150"/>
+                @endif
+              </div>
+              <div class="col-md-6 align-middle">
+                <input type="file" class="custom-file-input" id="file" name="file">
+                <label class="custom-file-label mx-3" for="customFile">Elegir foto</label>
+              </div>
+            </div>
             <div class="form-group row">
               <label for="name" class="col-md-3 col-form-label text-md-left">Nombre</label>
 
@@ -32,6 +46,7 @@
                 @enderror
               </div>
             </div>
+            @endif
             <div class="form-group row">
               <label for="surname" class="col-md-3 col-form-label text-md-left">Apellidos</label>
 
@@ -102,7 +117,7 @@
                 <input
                   id="birthday"
                   type="text"
-                  class="form-control @error('birthday') is-invalid @enderror"
+                  class="date form-control @error('birthday') is-invalid @enderror"
                   name="birthday"
                   value="{{$user->birthday}}"
                   {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
@@ -291,12 +306,16 @@
 
 <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('js/functions.js') }}"></script>
-<script>
+
+<script type="text/javascript">
   $(document).ready(function(){
+    $('#birthday').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
     $('#region').change(function(){
         var inputValue = $(this).val();
         getRegion(inputValue);
     });
   });
-</script>
 
+</script>

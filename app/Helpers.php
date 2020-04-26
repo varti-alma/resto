@@ -74,9 +74,9 @@
 
   function userType($userType){
     if ($userType == "0")
-      return "Usuario";
+      return "Perfil";
     else
-      return "Restaurante";
+      return "Perfil";
   }
 
   function getRestoTypeName($restoTypeList){
