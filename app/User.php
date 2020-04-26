@@ -78,9 +78,7 @@ class User extends Authenticatable
         $experiencesList[$id] = $experience[0];
       }
 
-      return $result = DB::table('users')
-      ->where('id', '=',$id_to_use)
-      ->update([
+      $data = [
         'name' => $request['name'],
         'surname' => $request['surname'],
         'telephone' => $request['telephone'],
@@ -90,10 +88,15 @@ class User extends Authenticatable
         'region' => $request['region'],
         'city' => $request['city'],
         'resto_type' => $resto_type_list,
-        'profile_photo' => $request['filename'],
         'experiences' => implode( ", ", array_values($experiencesList) ),
         'updated_at' => date("Y-m-d H:i:s"),
-      ]);
+      ];
+      if(array_key_exists('filename', $request))
+        $data['profile_photo'] = $request['filename'];
+
+      return $result = DB::table('users')
+      ->where('id', '=',$id_to_use)
+      ->update($data);
     }
     /**
      * get all users

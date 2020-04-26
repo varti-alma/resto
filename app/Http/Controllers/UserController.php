@@ -80,9 +80,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fileName = $id.'_'.rand().'.'.$request->file('file')->getClientOriginalExtension();
-        $request->file('file')->move(public_path('avatars'), $fileName );
-        $request['filename'] = $fileName;
+        if($request->file('file')){
+            $fileName = $id.'_'.rand().'.'.$request->file('file')->getClientOriginalExtension();
+            $request->file('file')->move(public_path('avatars'), $fileName );
+            $request['filename'] = $fileName;                
+        }
         $result = User::edit($request->all(), $id);
         $user = User::find($id);
 
