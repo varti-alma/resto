@@ -140,7 +140,7 @@ class User extends Authenticatable
       'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
       'user_type', 'experiences', 'resto_type']);
 
-      if($param['city'] === '-'){
+      if(!array_key_exists('city', $param)){
         if($param['selected_region'] !== '-') {
           $query->where('region', $param['selected_region']);
         }
