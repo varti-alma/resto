@@ -14,13 +14,11 @@
 
 
             <select name="selected_region" id="selected_region_list" class="form-control">
-              <option value='-'>Todos</option>
             @foreach(regionList() as $key => $region)
               <option value={{$key}}>{{$region}}</option>
             @endforeach
             </select>
             <select id="city" name="city" class="form-control my-3">
-              <option value='-'>Todos</option>
             </select>
             <div class="form-inline">
               <div class="form-group">

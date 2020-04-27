@@ -9,7 +9,10 @@
             <span class="pt-1">Detalle</span>
         </div>
         <div class="card-body">
-          <h5 class="col-md-12 text-md-left pl-0">Datos personales</h5>
+          <h5 class="col-md-12 text-md-left pl-0">
+            Datos personales
+            @if($user->user_type == '1') del contacto @endif
+          </h5>
           @if (session('status'))
               <div class="alert alert-success" role="alert">
                   {{ session('status') }}
@@ -34,7 +37,13 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="name" class="col-md-3 col-form-label text-md-left">Nombre</label>
+              <label for="name" class="col-md-3 col-form-label text-md-left">
+                @if($user->user_type == '1')
+                  Razón social
+                @else
+                  Nombre
+                @endif
+              </label>
 
               <div class="col-md-6">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$user->name}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
@@ -48,7 +57,14 @@
             </div>
             @endif
             <div class="form-group row">
-              <label for="surname" class="col-md-3 col-form-label text-md-left">Apellidos</label>
+              <label for="surname" class="col-md-3 col-form-label text-md-left">
+                @if($user->user_type == '1')
+                  Nombre de fantasía
+                @else
+                  Apellidos
+                @endif
+              
+              </label>
 
               <div class="col-md-6">
                 <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{$user->surname}}" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
@@ -97,6 +113,7 @@
                 @enderror
               </div>
             </div>
+            @if($user->user_type != '1')
             <div class="form-group row">
               <label for="document_id" class="col-md-3 col-form-label text-md-left">RUT</label>
 
@@ -131,6 +148,7 @@
                 @enderror
               </div>
             </div>
+            @endif
             <div class="form-group row">
               <label for="gender" class="col-md-3 col-form-label text-md-left">Género</label>
 
@@ -178,7 +196,7 @@
               <select id="city" name="city" class="form-control" {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}>
                 @if($user->city !== "")
                   @foreach(cityList($user->region) as $key => $city)
-                    <option value={{$key}} {{ ($user->city == $key ? "selected":"") }}>{{$city}}</option>
+                    <option value={{$city['code']}} {{ ($user->city == $city['code'] ? "selected":"") }}>{{$city['name']}}</option>
                   @endforeach
                 @endif
               </select>
@@ -309,9 +327,6 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#birthday').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
     $('#region').change(function(){
         var inputValue = $(this).val();
         getRegion(inputValue);

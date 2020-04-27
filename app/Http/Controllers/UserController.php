@@ -124,7 +124,6 @@ class UserController extends Controller
      */
     public function getCity($idRegion)
     {
-        //
         return cityList($idRegion);
     }
 }

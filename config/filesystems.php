@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('/public/avatars'),
+            'root' => storage_path('app'),
             'permissions' => [
                 'file' => [
                     'public' => 0664,
