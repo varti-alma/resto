@@ -47,7 +47,7 @@
                   id="experience-selected-{{$experience->experience_id}}"
                   name="experience-selected-id[]"
                   value="{{$experience->experience_id}}"
-                  {{checkedInputArray($experience->experience_id, $param, 'experience-selected-id')}}
+                  {{checkedInputArrayHome($experience->experience_id, $param, 'experience-selected-id')}}
                 >
                 <label for="experience-selected-{{$experience->experience_id}}" class="pl-4">{{$experience->description}}</label>
               </div>
@@ -78,7 +78,7 @@
                   id="resto-selected-{{$resto->id}}"
                   name="resto-selected-id[]"
                   value="{{$resto->resto_type_id}}"
-                  {{checkedInputArray($resto->resto_type_id, $param, 'resto-selected-id')}}
+                  {{checkedInputArrayHome($resto->resto_type_id, $param, 'resto-selected-id')}}
                 >
                 <label for="resto-selected-{{$resto->resto_type_id}}" class="pl-4">{{$resto->description}}</label>
               </div>
