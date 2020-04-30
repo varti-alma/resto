@@ -322,7 +322,7 @@
 @endsection
 @yield('scripts')
 
-<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/functions.js') }}"></script>
 
 <script type="text/javascript">
