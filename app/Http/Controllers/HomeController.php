@@ -43,7 +43,10 @@ class HomeController extends Controller
             'userList' => $userListUpdated,
             'experienceList' => $experienceList,
             'restoTypeList' => $restoTypeList,
-            'param' => array()
+            'param' => array(
+                'selected_region' => "",
+                'city' => ""
+            )
         ]);
     }
     /**
@@ -56,9 +59,8 @@ class HomeController extends Controller
      */
     public function filterPeopleList(Request $request)
     {
-        //
-        //print_r($request->all());
-        //exit;
+        // print_r($request->all());
+        // exit;
         $userLogged = Auth::user();
         $userList = User::filterPeopleList($request->all());
         $experienceList = Experience::orderBy('description', 'ASC')->get();

@@ -1,4 +1,4 @@
-const getRegion = async (idRegion) => {
+const getRegion = async (idRegion, idCity) => {
   const api = await fetch('/getCity/'+idRegion);
   const cityList = await api.json();
   $("#city option").each(function() {
@@ -6,7 +6,9 @@ const getRegion = async (idRegion) => {
   });
   Object.keys(cityList).map((row) => {
     data = cityList[row];
-    $('#city').prepend("<option value='"+data['code']+"' >"+data["name"]+"</option>")
+    cityCode = parseInt(data.code);
+    selected = cityCode === idCity ? "selected" : "";
+    $('#city').prepend("<option value='"+data['code']+"' "+selected+">"+data["name"]+"</option>")
   });
   return data;
 }

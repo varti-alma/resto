@@ -12,10 +12,12 @@
               {{method_field('PATCH')}}
               @csrf
 
-
+            
             <select name="selected_region" id="selected_region_list" class="form-control">
             @foreach(regionList() as $key => $region)
-              <option value={{$key}}>{{$region}}</option>
+              <option value={{$key}}
+                {{($param['selected_region'] == $key ? 'selected' : '' )}}
+              >{{$region}}</option>
             @endforeach
             </select>
             <select id="city" name="city" class="form-control my-3">
@@ -155,6 +157,10 @@
 <script src="{{ asset('js/functions.js') }}"></script>
 <script>
   $(document).ready(function(){
+    // Carga inicial de región 
+    var inputValue = $('#selected_region_list').val();
+    getRegion(inputValue, {{$param['city']}});
+
     $('#user-selected-all').change(function(){
       if($('#user-selected-all').prop('checked')){
         $("input[name='user-selected']").prop("checked", true);
@@ -164,7 +170,7 @@
     });
     $('#selected_region_list').change(function(){
         var inputValue = $(this).val();
-        getRegion(inputValue);
+        getRegion(inputValue, {{$param['city']}});
         this.form.submit();
     });
     $('#city').change(function(){
