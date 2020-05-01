@@ -15,14 +15,6 @@
   }
 
   function checkedInputArray($id, $idList, $param){
-    /*
-    echo '---'.$id.'---';
-    echo "Hola";
-    echo '<pre>';
-    print_r($param);
-    echo '</pre>';
-    echo array_key_exists($param, $idList);
-    */
     if(array_key_exists($param, $idList)){
       $found = in_array($id, $idList);
       // print_r($found);

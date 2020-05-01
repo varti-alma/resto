@@ -4,12 +4,27 @@ const getRegion = async (idRegion, idCity) => {
   $("#city option").each(function() {
     $(this).remove();
   });
-  Object.keys(cityList).map((row) => {
-    data = cityList[row];
-    cityCode = parseInt(data.code);
-    selected = cityCode === idCity ? "selected" : "";
-    $('#city').prepend("<option value='"+data['code']+"' "+selected+">"+data["name"]+"</option>")
-  });
+  let data = [];
+  if(idRegion === "-"){
+    $('#city').prepend("<option value='-'>Todos</option>")
+    data = [];
+  } else {
+    data = Object.values(cityList) 
+    .sort(function order(key1, key2) { 
+        if (key1.name > key2.name) return -1; 
+        else if (key1.name < key2.name) return +1; 
+        else return 0; 
+    });  
+    data.map((row) => {
+      cityCode = parseInt(row.code);
+      selected = cityCode === parseInt(idCity) ? "selected" : "";
+      $('#city').prepend("<option value='"+row.code+"' "+selected+">"+row.name+"</option>")
+    });  
+    if(idCity === "-")
+      $('#city').prepend("<option value='-' selected>Todos</option>")
+    else
+      $('#city').prepend("<option value='-'>Todos</option>")
+  }
   return data;
 }
 

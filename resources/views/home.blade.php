@@ -14,6 +14,7 @@
 
             
             <select name="selected_region" id="selected_region_list" class="form-control">
+              <option value="-">Todos</option>
             @foreach(regionList() as $key => $region)
               <option value={{$key}}
                 {{($param['selected_region'] == $key ? 'selected' : '' )}}
@@ -159,7 +160,7 @@
   $(document).ready(function(){
     // Carga inicial de región 
     var inputValue = $('#selected_region_list').val();
-    getRegion(inputValue, {{$param['city']}});
+    getRegion(inputValue, "{{$param['city']}}");
 
     $('#user-selected-all').change(function(){
       if($('#user-selected-all').prop('checked')){
@@ -170,7 +171,7 @@
     });
     $('#selected_region_list').change(function(){
         var inputValue = $(this).val();
-        getRegion(inputValue, {{$param['city']}});
+        getRegion(inputValue, "{{$param['city']}}");
         this.form.submit();
     });
     $('#city').change(function(){

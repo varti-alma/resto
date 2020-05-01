@@ -45,7 +45,9 @@ class HomeController extends Controller
             'restoTypeList' => $restoTypeList,
             'param' => array(
                 'selected_region' => "",
-                'city' => ""
+                'city' => "",
+                'experience-selected-id' => [],
+                'resto-selected-id' => [],
             )
         ]);
     }
@@ -71,16 +73,34 @@ class HomeController extends Controller
             $resto_type = RestoType::getList($user->resto_type);
             $userListUpdated[$key]->resto_type = getRestoTypeName($resto_type);
         }
-        //return $userListUpdated;
+
+        if(!array_key_exists('selected_region', $request->all())){ 
+            $param['selected_region'] = ""; 
+        } else {
+            $param['selected_region'] = $request->all()['selected_region']; 
+        }
+        if(!array_key_exists('city', $request->all())){ 
+            $param['city'] = ""; 
+        } else {
+            $param['city'] = $request->all()['city']; 
+        }
+        if(!array_key_exists('experience-selected-id', $request->all())){ 
+            $param['experience-selected-id'] = []; 
+        } else {
+            $param['experience-selected-id'] = $request->all()['experience-selected-id']; 
+        }
+        if(!array_key_exists('resto-selected-id', $request->all())){ 
+            $param['resto-selected-id'] = []; 
+        } else {
+            $param['resto-selected-id'] = $request->all()['resto-selected-id']; 
+        }
         return view('home', [
             'userLogged' => $userLogged,
             'userList' => $userListUpdated,
             'experienceList' => $experienceList,
             'restoTypeList' => $restoTypeList,
-            'param' => $request->all()
+            'param' => $param
         ]);
-
-
     }
 
 }
