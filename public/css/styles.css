@@ -11,8 +11,7 @@
   right: 2rem;
   */
   color: white;
-  padding: .5rem;
-  padding-top: .05rem;
+  padding: .05rem .5rem ;
   height: 1.5rem;
   border-radius: 1rem;
 }

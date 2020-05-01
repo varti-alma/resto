@@ -12,11 +12,12 @@
             <div class="card-header d-flex justify-content-between align-middle">
               Filtros
               <button id="clean-all" class="btn btn-primary btn-sm">
-                <i class="far fa-file-pdf fa-xl mr-2"></i> 
+                <i class="fas fa-recycle fa-xl mr-2"></i> 
                 <span>Limpiar</span>
               </button>
             </div>
             <div class="card-body">
+              <label for="selected_region_list" class="mb-0">Región</label>
               <select name="selected_region" id="selected_region_list" class="form-control">
                 <option value="-">Todos</option>
               @foreach(regionList() as $key => $region)
@@ -25,11 +26,12 @@
                 >{{$region}}</option>
               @endforeach
               </select>
-              <select id="city" name="city" class="form-control my-3">
+              <label for="city" class="mt-3 mb-0">Ciudad</label>
+              <select id="city" name="city" class="form-control mb-3">
               </select>
               <div class="form-inline">
                 <div class="form-group">
-                  <label for="txtSearchExperience" class="mr-3 mb-3">Experiencias</label>
+                  <label for="txtSearchExperience" class="mb-3">Experiencias</label>
                   <!--
                   <input
                     type="text"
@@ -119,7 +121,7 @@
               <label for="user-selected-all" class="pl-4">Seleccionar todos</label>
             </div>
             <div class="col-6 text-right pr-3">
-              <button class="btn btn-primary btn-sm"><i class="far fa-file-excel fa-xl mr-2"></i> Descargar</button>
+              <button class="btn btn-primary btn-sm"><i class="far fa-file-excel fa-xl mr-2"></i> Exportar</button>
             </div>
           </div>
           <div id="user-list">
@@ -128,17 +130,29 @@
               <div class="col-1 text-center">
                 <input type="checkbox" name="user-selected" id="user-selected-{{$user->id}}">
               </div>
-              <div class="row col-12 col-md-9 pl-0">
-                <div class="col-12"> {{($user->name != "" ? $user->name.' '.$user->surname : "Sin nombre" )}}
-                  <label for="" class="label-place {{($user->city == "" ? 'bg-grey': '')}}">
-                    <i class="fas fa-map-marker-alt fa-md mr-1"></i>
-                    {{($user->city != "-" && $user->city != "" ? getCityName($user->city, $user->region) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
-                  </label>
-                  <label for="" class="label-gender {{getGenderLabelColor($user->gender)}}">{{getGender($user->gender)}}
+              <div class="row col-11 col-md-9 pl-0">
+                <div class="col-3 pr-0">
+                  @if($user->profile_photo != "")
+                    <img src="{{'/avatars/'.$user->profile_photo}}" class="img-fluid"/>
+                  @else
+                    <i class="fas fa-portrait fa-9x text-secondary"></i>
+                  @endif
                 </div>
-                <div class="col-12 col-md-6"><i class="fas fa-envelope fa-md text-secondary"></i> {{$user->email}}</div>
-                <div class="col-12 col-md-6"><i class="fas fa-phone-alt fa-md text-secondary"></i> {{($user->telephone != "" ? $user->telephone : "Sin teléfono" )}}</div>
-                <div class="col-12 my-2"><i class="fas fa-utensils fa-md mr-2 text-secondary"></i>{{$user->resto_type}}</div>
+                <div class="col-9"> 
+                  <div class="col-12">
+                    <p class="mb-1">
+                      {{($user->name != "" ? $user->name.' '.$user->surname : "Sin nombre" )}}</span>
+                      <span class="label-gender {{getGenderLabelColor($user->gender)}}">{{getGender($user->gender)}}
+                    </p>
+                    <label for="" class="label-place {{($user->city == "" ? 'bg-grey': '')}}">
+                      <i class="fas fa-map-marker-alt fa-md mr-1"></i>
+                      {{($user->city != "-" && $user->city != "" ? getCityName($user->city, $user->region) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
+                    </label>
+                  </div>
+                  <div class="col-12"><i class="fas fa-envelope fa-md text-secondary"></i> {{$user->email}}</div>
+                  <div class="col-12"><i class="fas fa-phone-alt fa-md text-secondary"></i> {{($user->telephone != "" ? $user->telephone : "Sin teléfono" )}}</div>
+                  <div class="col-12"><i class="fas fa-utensils fa-md mr-2 text-secondary"></i>{{$user->resto_type}}</div>
+                </div>
               </div>
               <div class="col-12 col-md-2">
                 <a href="/users/{{$user->id}}" class="btn btn-primary">Ver</a>
