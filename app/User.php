@@ -139,28 +139,30 @@ class User extends Authenticatable
       $query->select(['id', 'name', 'surname', 'company_name', 'telephone', 'document_id',
       'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
       'user_type', 'experiences', 'resto_type']);
-
-      if(!array_key_exists('city', $param)){
-        if($param['selected_region'] !== '-') {
+      if(array_key_exists('selected_region', $param)){
+        if($param['selected_region'] !== "-"){
           $query->where('region', $param['selected_region']);
         }
-      }else{
-        $query->where('city', $param['city']);
+      }
+      if(array_key_exists('city', $param)){
+        if($param['city'] !== "-"){
+          $query->where('city', $param['city']);
+        }
       }
       $query->where('user_type', '0');
-
+      $query->where('state', '1');
+      
       if(array_key_exists('resto-selected-id', $param)){
         foreach($param['resto-selected-id'] as $key => $resto){
-          $query->where('resto_type', 'like', '%'.$resto.'%');
+          $query->orWhere('resto_type', 'like', '%'.$resto.'%');
         }
       }
 
       if(array_key_exists('experience-selected-id', $param)){
         foreach($param['experience-selected-id'] as $key => $experience){
-          $query->where('experiences', 'like', '%'.$experience.'-%');
+          $query->orWhere('experiences', 'like', '%'.$experience.'-%');
         }
-      }
-
+      }      
       return $query->get();
   }
 

@@ -224,55 +224,55 @@
                       <label for="">
                         <input
                           type="radio"
-                          name="experience-list-{{$key}}[]"
-                          id="experience-list-{{$key}}-1"
+                          name="experience-list-{{$exp->experience_id}}[]"
+                          id="experience-list-{{$exp->experience_id}}-1"
                           class="mr-2"
-                          value="{{$key}}-1"
-                          {{checkedInput($key.'-1', $user->experiences)}}
+                          value="{{$exp->experience_id}}-1"
+                          {{checkedInput($exp->experience_id.'-1', $user->experiences)}}
                           {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
                         >1
                       </label>
                       <label for="">
                         <input
                           type="radio"
-                          name="experience-list-{{$key}}[]"
-                          id="experience-list-{{$key}}-2"
+                          name="experience-list-{{$exp->experience_id}}[]"
+                          id="experience-list-{{$exp->experience_id}}-2"
                           class="mr-2"
-                          value="{{$key}}-2"
-                          {{checkedInput($key.'-2', $user->experiences)}}
+                          value="{{$exp->experience_id}}-2"
+                          {{checkedInput($exp->experience_id.'-2', $user->experiences)}}
                           {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
                         >2
                       </label>
                       <label for="">
                         <input
                           type="radio"
-                          name="experience-list-{{$key}}[]"
-                          id="experience-list-{{$key}}-3"
+                          name="experience-list-{{$exp->experience_id}}[]"
+                          id="experience-list-{{$exp->experience_id}}-3"
                           class="mr-2"
-                          value="{{$key}}-3"
-                          {{checkedInput($key.'-3', $user->experiences)}}
+                          value="{{$exp->experience_id}}-3"
+                          {{checkedInput($exp->experience_id.'-3', $user->experiences)}}
                           {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
                         >3
                       </label>
                       <label for="">
                         <input
                           type="radio"
-                          name="experience-list-{{$key}}[]"
-                          id="experience-list-{{$key}}-4"
+                          name="experience-list-{{$exp->experience_id}}[]"
+                          id="experience-list-{{$exp->experience_id}}-4"
                           class="mr-2"
-                          value="{{$key}}-4"
-                          {{checkedInput($key.'-4', $user->experiences)}}
+                          value="{{$exp->experience_id}}-4"
+                          {{checkedInput($exp->experience_id.'-4', $user->experiences)}}
                           {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
                         >4
                       </label>
                       <label for="">
                         <input
                           type="radio"
-                          name="experience-list-{{$key}}[]"
-                          id="experience-list-{{$key}}-5"
+                          name="experience-list-{{$exp->experience_id}}[]"
+                          id="experience-list-{{$exp->experience_id}}-5"
                           class="mr-2"
-                          value="{{$key}}-5"
-                          {{checkedInput($key.'-5', $user->experiences)}}
+                          value="{{$exp->experience_id}}-5"
+                          {{checkedInput($exp->experience_id.'-5', $user->experiences)}}
                           {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
                         >5
                       </label>
