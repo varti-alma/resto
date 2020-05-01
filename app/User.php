@@ -138,7 +138,7 @@ class User extends Authenticatable
 
       $query->select(['id', 'name', 'surname', 'company_name', 'telephone', 'document_id',
       'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
-      'user_type', 'experiences', 'resto_type']);
+      'user_type', 'experiences', 'resto_type', 'profile_photo']);
       if(array_key_exists('selected_region', $param)){
         if($param['selected_region'] !== "-"){
           $query->where('region', $param['selected_region']);
@@ -154,15 +154,16 @@ class User extends Authenticatable
       
       if(array_key_exists('resto-selected-id', $param)){
         foreach($param['resto-selected-id'] as $key => $resto){
-          $query->orWhere('resto_type', 'like', '%'.$resto.'%');
+          $query->where('resto_type', 'like', '%'.$resto.'%');
         }
       }
 
       if(array_key_exists('experience-selected-id', $param)){
         foreach($param['experience-selected-id'] as $key => $experience){
-          $query->orWhere('experiences', 'like', '%'.$experience.'-%');
+          $query->where('experiences', 'like', '%'.$experience.'-%');
         }
-      }      
+      }
+
       return $query->get();
   }
 
