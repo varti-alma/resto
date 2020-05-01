@@ -115,7 +115,7 @@
               <label for="user-selected-all" class="pl-4">Seleccionar todos</label>
             </div>
             <div class="col-6 text-right pr-3">
-              <button class="btn btn-primary btn-sm"><i class="fas fa-envelope fa-xl mr-2"></i> Enviar por correo</button>
+              <button class="btn btn-primary btn-sm"><i class="far fa-file-excel fa-xl mr-2"></i> Descargar</button>
             </div>
           </div>
           <div id="user-list">
@@ -128,7 +128,7 @@
                 <div class="col-12"> {{($user->name != "" ? $user->name.' '.$user->surname : "Sin nombre" )}}
                   <label for="" class="label-place {{($user->city == "" ? 'bg-grey': '')}}">
                     <i class="fas fa-map-marker-alt fa-md mr-1"></i>
-                    {{($user->city != "-" && $user->city != "" ? getCityName($user->city) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
+                    {{($user->city != "-" && $user->city != "" ? getCityName($user->city, $user->region) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
                   </label>
                   <label for="" class="label-gender {{getGenderLabelColor($user->gender)}}">{{getGender($user->gender)}}
                 </div>

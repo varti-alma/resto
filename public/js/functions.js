@@ -22,7 +22,9 @@ const getRegion = async (idRegion, idCity) => {
     });  
     if(idCity === "-")
       $('#city').prepend("<option value='-' selected>Todos</option>")
-    else
+    else if(!idCity)
+      $('#city').prepend("<option value='-' selected>Por favor seleccione una ciudad</option>")
+    else 
       $('#city').prepend("<option value='-'>Todos</option>")
   }
   return data;

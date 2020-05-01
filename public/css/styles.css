@@ -48,3 +48,17 @@
   background-color: #227dc7;
   border-color: #2176bd;
 }
+
+@media print
+{
+  body * { visibility: hidden; }
+  .card-body * { 
+    visibility: visible; 
+  }
+  .form-control{
+    border: none;
+  }
+  .btn-success{
+    visibility: hidden;
+  }
+}

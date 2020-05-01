@@ -7,6 +7,10 @@
       <div class="card">
         <div class="card-header d-flex justify-content-between align-middle">
             <span class="pt-1">Detalle</span>
+            <button class="btn btn-primary btn-sm" onClick="window.print();">
+              <i class="far fa-file-pdf fa-xl mr-2"></i> 
+              <span>Descargar</span>
+            </button>
         </div>
         <div class="card-body">
           <h5 class="col-md-12 text-md-left pl-0">
@@ -176,6 +180,7 @@
                 class="form-control"
                 {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
               >
+                <option value="-" {{($user->region == "") ? "selected":""}}>Por favor seleccione una región</option>
                 @foreach(regionList() as $key => $region)
                   <option value={{$key}} {{ ($user->region == $key ? "selected":"") }}>{{$region}}</option>
                 @endforeach

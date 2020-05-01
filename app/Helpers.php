@@ -99,11 +99,13 @@
     return '-';
   }
 
-  function getCityName($city){
+  function getCityName($city, $region){
     if($city != ""){
-      $region = preg_split('/-/', $city);
-      $cityList = cityList($region[0]);
-      return $cityList[$city];
+      $cityList = collect(cityList($region));
+      $cityData = $cityList->first(function ($ciudad, $key) use ($city) {
+        return $ciudad["code"] == $city;
+      });
+      return $cityData['name'];
     }
     return '-';
   }
@@ -123,15 +125,17 @@
 
     $collection = collect($list);
     $filtered = $collection->firstWhere("region_number", $region);
-    if(!$filtered) return array("-" => "Por favor seleccionar una región");
+    if(!$filtered) 
+      return [["code" => "-", "name" => "Por favor seleccionar una región"]];
     else{
       $provincias = collect($filtered['provincias']);
-      return $provincias->flatMap(function ($comuna, $key) {
+      $result = $provincias->flatMap(function ($comuna, $key) {
         $comunas = collect($comuna['comunas']);
         return $comunas->map(function ($ciudad, $key) {
           return $ciudad;
         });
       })->sortBy('name')->all();
+      return $result;
     }
   }
 
