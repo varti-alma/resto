@@ -320,7 +320,7 @@
               @if(disabledInput($user->id, Auth::user()->id))
                 <button class="btn btn-primary" type="submit">Actualizar</button>
               @else
-                <a href="/home" class="btn btn-success">Volver</a>
+                <button class="btn btn-success" onClick="window.close();">Cerrar</button>
               @endif
             </div>
           </form>

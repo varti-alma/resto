@@ -155,7 +155,7 @@
                 </div>
               </div>
               <div class="col-12 col-md-2">
-                <a href="/users/{{$user->id}}" class="btn btn-primary">Ver</a>
+                <a href="/users/{{$user->id}}" class="btn btn-primary" target="_blank">Ver</a>
               </div>
             </div>
           @endforeach
