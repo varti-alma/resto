@@ -141,12 +141,12 @@
                   <div class="col-md-6">
                     <input
                       id="birthday"
-                      type="text"
+                      type="date"
                       class="date form-control @error('birthday') is-invalid @enderror"
                       name="birthday"
                       value="{{$user->birthday}}"
                       {{(disabledInput($user->id, Auth::user()->id) ? "": "disabled")}}
-                      placeholder="YYYY-MM-DD"
+                      placeholder="dd-mm-aaaa"
                     >
 
                     @error('birthday')
@@ -156,7 +156,6 @@
                     @enderror
                   </div>
                 </div>
-                @endif
                 <div class="form-group row">
                   <label for="gender" class="col-md-3 col-form-label text-md-left">Género</label>
 
@@ -173,6 +172,7 @@
                     @enderror
                   </div>
                 </div>
+                @endif
 
                 <div class="form-group row">
                   <label for="region" class="col-md-3 col-form-label text-md-left">Región</label>
@@ -340,6 +340,18 @@
     $('#region').change(function(){
         var inputValue = $(this).val();
         getRegion(inputValue);
+    });
+    $('#birthday').change(function(){
+        var inputValue = $(this).val();
+        var birthday = new Date(inputValue);
+        var today = new Date();
+        if(today < birthday){
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+          today = yyyy + '-' + mm + '-' + dd;          
+          $(this).val(today);
+        }
     });
   });
 
