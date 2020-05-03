@@ -135,7 +135,7 @@
                   @if($user->profile_photo != "")
                     <img src="{{'/avatars/'.$user->profile_photo}}" class="img-fluid"/>
                   @else
-                    <i class="fas fa-portrait fa-9x text-secondary"></i>
+                    <i class="fas fa-portrait fa-9x"></i>
                   @endif
                 </div>
                 <div class="col-9"> 

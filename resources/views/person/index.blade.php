@@ -5,17 +5,16 @@
   <div class="justify-content-center">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-middle">
-            <span class="pt-1">Detalle</span>
+            <h5 class="pt-1 pl-4">            
+              Datos personales
+              @if($user->user_type == '1') del contacto @endif
+            </h5>
             <button class="btn btn-primary btn-sm" onClick="document.title='{{$user->name}} {{$user->surname}}'; window.print();">
               <i class="far fa-file-pdf fa-xl mr-2"></i> 
               <span>Descargar</span>
             </button>
         </div>
-        <div class="card-body">
-          <h5 class="col-md-12 text-md-left pl-0">
-            Datos personales
-            @if($user->user_type == '1') del contacto @endif
-          </h5>
+        <div class="card-body p-5">
           @if (session('status'))
               <div class="alert alert-success" role="alert">
                   {{ session('status') }}
@@ -28,7 +27,7 @@
             <div class="row">
               <div class="col-md-3">
                 @if($user->profile_photo === "")
-                  <p>No foto</p>
+                  <i class="fas fa-portrait fa-10x"></i>
                 @else
                   <img src="{{'/avatars/'.$user->profile_photo}}" width="150"/>
                 @endif
@@ -38,7 +37,7 @@
                   <div class="col-md-3 align-middle">
                   </div>
                   @if (disabledInput($user->id, Auth::user()->id))
-                  <div class="col-md-6 align-middle">
+                  <div class="col-md-6 align-middle d-print-none">
                     <input type="file" class="custom-file-input" id="file" name="file">
                     <label class="custom-file-label mx-3" for="customFile">Elegir foto</label>
                   </div>
@@ -318,9 +317,9 @@
             </div>
             <div class="text-center">
               @if(disabledInput($user->id, Auth::user()->id))
-                <button class="btn btn-primary" type="submit">Actualizar</button>
+                <button class="btn btn-primary d-print-none" type="submit">Actualizar</button>
               @else
-                <button class="btn btn-success" onClick="window.close();">Cerrar</button>
+                <button class="btn btn-success d-print-none" onClick="window.close();">Cerrar</button>
               @endif
             </div>
           </form>
