@@ -111,7 +111,7 @@
   }
 
   function regionList(){
-    $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    $json = Storage::disk('public')->get('regiones-provincias-comunas.json');
     print_r($json);
     $list = json_decode($json, true);
     $collection = collect($list);
@@ -121,7 +121,7 @@
   }
 
   function cityList($region){
-    $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    $json = Storage::disk('public')->get('regiones-provincias-comunas.json');
     print_r($json);
     $list = json_decode($json, true);
 

@@ -133,7 +133,7 @@ class HomeController extends Controller
             $aux->resto_type = getRestoTypeName($resto_type);
 
             if($aux->region !== "" && $aux->region !== "-"){
-                $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+                $json = Storage::disk('public')->get('regiones-provincias-comunas.json');
                 $list = json_decode($json, true);
             
                 $collection = collect($list);
