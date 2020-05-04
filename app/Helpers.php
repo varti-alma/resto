@@ -105,7 +105,7 @@
       $cityData = $cityList->first(function ($ciudad, $key) use ($city) {
         return $ciudad["code"] == $city;
       });
-      dd($cityData['name']);
+      dd($cityData);
       return $cityData['name'];
     }
     return '-';
