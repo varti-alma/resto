@@ -114,7 +114,7 @@
   }
 
   function getCityListName($region){
-    if($region != ""){
+    if($region != "" && $region != "-"){
       $regionList = regionList();
       return $regionList[$region];
     }
