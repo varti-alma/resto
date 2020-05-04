@@ -113,6 +113,19 @@ class User extends Authenticatable
         ->get();
     }
     /**
+     * get all active users
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public static function getAllActiveUser()
+    {
+      return DB::table('users')
+      ->where('user_type', '=', '0')
+      ->where('state', '=', '1')
+      ->get();
+    }
+    /**
      * get all restorants
      *
      * @param  Request  $request
@@ -133,12 +146,18 @@ class User extends Authenticatable
      */
     public static function filterPeopleList($param)
     {
-
       $query = DB::table('users');
+      $array = [];
 
-      $query->select(['id', 'name', 'surname', 'company_name', 'telephone', 'document_id',
-      'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
-      'user_type', 'experiences', 'resto_type', 'profile_photo']);
+      if($param['photo'])
+        $array = ['id', 'name', 'surname', 'company_name', 'telephone', 'document_id',
+        'region', 'city', 'email', 'availability', 'gender', 'birthday', 'schedule', 'address',
+        'user_type', 'experiences', 'resto_type', 'profile_photo'];
+      else
+        $array = ['name', 'surname', 'telephone', 'document_id', 'region', 'city',
+         'email', 'gender', 'birthday', 'address', 'experiences', 'resto_type'];
+
+      $query->select($array);
       if(array_key_exists('selected_region', $param)){
         if($param['selected_region'] !== "-"){
           $query->where('region', $param['selected_region']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -101,6 +102,53 @@ class HomeController extends Controller
             'restoTypeList' => $restoTypeList,
             'param' => $param
         ]);
+    }
+    /**
+     * Filtrar listado de personas según entrada
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadCsv(Request $request)
+    {
+        $userList = User::filterPeopleList($request->all());
+        $users = [];
+        foreach($userList as $key => $user){
+            $aux = $user;
+            if( is_null( $user->name )) $aux->name = "";
+            if( is_null( $user->surname )) $aux->surname = "";
+            if( is_null( $user->telephone )) $aux->telephone = "";
+            if( is_null( $user->document_id )) $aux->document_id = "";
+            if( is_null( $user->region )) $aux->region = "";
+            if( is_null( $user->city )) $aux->city = "";
+            if( is_null( $user->email )) $aux->email = "";
+            if( is_null( $user->gender )) $aux->gender = "";
+            if( is_null( $user->birthday )) $aux->birthday = "";
+            if( is_null( $user->address )) $aux->address = "";
+            if( is_null( $user->experiences )) $aux->experiences = "";
+            if( is_null( $user->resto_type )) $aux->resto_type = "";
+
+            $aux->gender = getGender($aux->gender);
+
+            $resto_type = RestoType::getList($aux->resto_type);
+            $aux->resto_type = getRestoTypeName($resto_type);
+
+            if($aux->region !== "" && $aux->region !== "-"){
+                    $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+                $list = json_decode($json, true);
+            
+                $collection = collect($list);
+                $filtered = $collection->firstWhere("region_number", $aux->region);
+
+                if($aux->city !== "" && $aux->city !== "-"){
+                    $city_name = getCityName($aux->city, $aux->region);
+                    $aux->city = $city_name;
+                }                    
+                $aux->region = $filtered["region"];
+            }
+            array_push($users, $user);
+        }
+
+        return json_encode($users);
     }
 
 }

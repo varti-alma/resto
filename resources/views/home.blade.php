@@ -9,6 +9,7 @@
           <form action="{{url('filterPeopleList')}}" method="POST">
             {{method_field('PATCH')}}
             @csrf
+            <input type="hidden" name="photo" value="false" />
             <div class="card-header d-flex justify-content-between align-middle">
               Filtros
               <button id="clean-all" class="btn btn-primary btn-sm">
@@ -121,7 +122,9 @@
               <label for="user-selected-all" class="pl-4">Seleccionar todos</label>
             </div>
             <div class="col-6 text-right pr-3">
-              <button class="btn btn-primary btn-sm"><i class="far fa-file-excel fa-xl mr-2"></i> Exportar</button>
+              <button id="download-file" class="btn btn-primary btn-sm">
+                <i class="far fa-file-excel fa-xl mr-2"></i> <span>Exportar</span>
+              </button>
             </div>
           </div>
           <div id="user-list">
@@ -146,7 +149,7 @@
                     </p>
                     <label for="" class="label-place {{($user->city == "" ? 'bg-grey': '')}}">
                       <i class="fas fa-map-marker-alt fa-md mr-1"></i>
-                      {{($user->city != "-" && $user->city != "" ? getCityName($user->city, $user->region) : "Sin ciudad" )}}, {{($user->region != "" ? getRegionName($user->region) : "Sin región" )}}
+                      {{($user->city != "-" && $user->city != "" ? getCityName($user->city, $user->region) : "Sin ciudad" )}}, {{($user->region != "" ? getCityListName($user->region) : "Sin región" )}}
                     </label>
                   </div>
                   <div class="col-12"><i class="fas fa-envelope fa-md text-secondary"></i> {{$user->email}}</div>
@@ -161,7 +164,7 @@
           @endforeach
           </div>
         @else
-          <h4 class="text-center">No hay usuarios registrados con esas características</h4>
+          <h4 class="text-center mt-5">No hay usuarios registrados con esas características</h4>
         @endif
       </div>
     </div>
@@ -178,14 +181,19 @@
   $(document).ready(function(){
     // Carga inicial de región 
     var inputValue = $('#selected_region_list').val();
-    getRegion(inputValue, "{{$param['city']}}");
+    getCityList(inputValue, "{{$param['city']}}");
 
     $('#clean-all').click(function(){
       $("#selected_region_list").val("-");
-      getRegion('-', '-');
+      getCityList('-', '-');
       $(".experience-selected").prop("checked", false);
       $(".resto-selected").prop("checked", false);
       this.form.submit();
+    });
+
+    $('#download-file').click(function(){
+      var CSRF_TOKEN = $("input[name=_token]").val();
+      downloadFile( CSRF_TOKEN );
     });
 
     $('#user-selected-all').change(function(){
@@ -197,7 +205,7 @@
     });
     $('#selected_region_list').change(function(){
         var inputValue = $(this).val();
-        getRegion(inputValue, "{{$param['city']}}");
+        getCityList(inputValue, "{{$param['city']}}");
         this.form.submit();
     });
     $('#city').change(function(){

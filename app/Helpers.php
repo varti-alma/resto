@@ -91,7 +91,7 @@
     return 'No hay tipo de restaurante informado';
   }
 
-  function getRegionName($region){
+  function getCityListName($region){
     if($region != ""){
       $regionList = regionList();
       return $regionList[$region];

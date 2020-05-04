@@ -338,7 +338,7 @@
   $(document).ready(function(){
     $('#region').change(function(){
         var inputValue = $(this).val();
-        getRegion(inputValue);
+        getCityList(inputValue);
     });
     $('#birthday').change(function(){
         var inputValue = $(this).val();

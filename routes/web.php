@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +24,4 @@ Route::resource('users', 'UserController')->except([
 
 Route::get('/getCity/{idRegion}', 'UserController@getCity')->name('getCity');
 Route::patch('/filterPeopleList/', 'HomeController@filterPeopleList')->name('filterPeopleList');
+Route::post('/downloadCsv/', 'HomeController@downloadCsv')->name('downloadCsv');
