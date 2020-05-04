@@ -111,7 +111,8 @@
   }
 
   function regionList(){
-    $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    //$json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    $json = file_get_contents('json/regiones-provincias-comunas.json');
     $list = json_decode($json, true);
     $collection = collect($list);
     return $collection->flatMap(function ($item, $key) {
@@ -120,7 +121,8 @@
   }
 
   function cityList($region){
-    $json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    //$json = Storage::disk('local')->get('regiones-provincias-comunas.json');
+    $json = file_get_contents('json/regiones-provincias-comunas.json');
     $list = json_decode($json, true);
 
     $collection = collect($list);
