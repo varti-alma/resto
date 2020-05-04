@@ -82,7 +82,6 @@ class User extends Authenticatable
         'name' => $request['name'],
         'surname' => $request['surname'],
         'telephone' => $request['telephone'],
-        'gender' => $request['gender'],
         'region' => $request['region'],
         'city' => $request['city'],
         'resto_type' => $resto_type_list,
@@ -95,6 +94,8 @@ class User extends Authenticatable
         $data['document_id'] = $request['document_id'];
       if(array_key_exists('birthday', $request))
         $data['birthday'] = $request['birthday'];
+      if(array_key_exists('gender', $request))
+        $data['gender'] = $request['gender'];
 
       return $result = DB::table('users')
       ->where('id', '=',$id_to_use)
