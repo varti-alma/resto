@@ -80,10 +80,10 @@
       return "Perfil";
   }
 
-  function getRestoTypeName($restoTypeList){
-    if(count($restoTypeList) > 0){
+  function getNameList($nameList){
+    if(count($nameList) > 0){
       $text = array();
-      foreach($restoTypeList as $key => $restoType){
+      foreach($nameList as $key => $restoType){
         array_push($text, $restoType->description);
       }
       return implode(', ', $text);

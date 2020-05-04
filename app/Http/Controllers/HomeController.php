@@ -37,7 +37,9 @@ class HomeController extends Controller
         foreach($userList as $key => $user){
             $userListUpdated[$key] = $user;
             $resto_type = RestoType::getList($user->resto_type);
-            $userListUpdated[$key]->resto_type = getRestoTypeName($resto_type);
+            $userListUpdated[$key]->resto_type = getNameList($resto_type);
+            $experiences = Experience::getList($user->experiences, false);
+            $userListUpdated[$key]->experiences = getNameList($experiences);
         }
         return view('home', [
             'userLogged' => $userLogged,
@@ -72,7 +74,9 @@ class HomeController extends Controller
         foreach($userList as $key => $user){
             $userListUpdated[$key] = $user;
             $resto_type = RestoType::getList($user->resto_type);
-            $userListUpdated[$key]->resto_type = getRestoTypeName($resto_type);
+            $userListUpdated[$key]->resto_type = getNameList($resto_type);
+            $experiences = Experience::getList($user->experiences, false);
+            $userListUpdated[$key]->experiences = getNameList($experiences);
         }
 
         if(!array_key_exists('selected_region', $request->all())){ 
@@ -130,7 +134,7 @@ class HomeController extends Controller
             $aux->gender = getGender($aux->gender);
 
             $resto_type = RestoType::getList($aux->resto_type);
-            $aux->resto_type = getRestoTypeName($resto_type);
+            $aux->resto_type = getNameList($resto_type);
 
             if($aux->region !== "" && $aux->region !== "-"){
                 //$json = Storage::disk('public')->get('regiones-provincias-comunas.json');

@@ -154,7 +154,8 @@
                   </div>
                   <div class="col-12"><i class="fas fa-envelope fa-md text-secondary"></i> {{$user->email}}</div>
                   <div class="col-12"><i class="fas fa-phone-alt fa-md text-secondary"></i> {{($user->telephone != "" ? $user->telephone : "Sin teléfono" )}}</div>
-                  <div class="col-12"><i class="fas fa-utensils fa-md mr-2 text-secondary"></i>{{$user->resto_type}}</div>
+                  <div class="col-12"><i class="fas fa-store fa-md mr-2 text-secondary"></i>{{$user->resto_type}}</div>
+                  <div class="col-12"><i class="fas fa-utensils fa-md mr-2 text-secondary"></i>{{$user->experiences}}</div>
                 </div>
               </div>
               <div class="col-12 col-md-2">
