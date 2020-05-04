@@ -63,13 +63,13 @@ const downloadFile = async (CSRF_TOKEN) => {
   const hh = today.getHours();
   const min = today.getMinutes();
   today = yyyy + '_' + mm + '_' + dd + '_' + hh + '_' + min;
-  /*
+
   const hiddenElement = document.createElement('a');
   hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
   hiddenElement.target = '_blank';
   hiddenElement.download = 'listado-personas-'+today+'.csv';
   hiddenElement.click();  
-  */
+
 }
 
 /**
