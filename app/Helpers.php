@@ -105,7 +105,6 @@
       $cityData = $cityList->first(function ($ciudad, $key) use ($city) {
         return $ciudad["code"] == $city;
       });
-      dd($cityData);
       if($cityData)
         return $cityData['name'];
       else
