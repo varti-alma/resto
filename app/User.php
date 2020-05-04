@@ -182,6 +182,9 @@ class User extends Authenticatable
           $query->where('experiences', 'like', '%'.$experience.'-%');
         }
       }
+      if(array_key_exists('users', $param)){
+        $query->whereIn('id', $param['users']);
+      }
 
       return $query->get();
   }

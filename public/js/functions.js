@@ -11,12 +11,16 @@ const downloadFile = async (CSRF_TOKEN) => {
   var city = $('#city').val();
   var experiences = [];
   var restos = [];
+  var users = [];
 
   $( "input[class='resto-selected']:checked" ).each(data =>{
     restos.push($( "input[class='resto-selected']:checked" )[data].value);
   })
   $( "input[class='experience-selected']:checked" ).each(data =>{
     experiences.push($( "input[class='experience-selected']:checked" )[data].value);
+  })
+  $( "input[class='user-selected']:checked" ).each(data =>{
+    users.push($( "input[class='user-selected']:checked" )[data].value);
   })
   
   result = await fetch('/downloadCsv/', {
@@ -30,6 +34,7 @@ const downloadFile = async (CSRF_TOKEN) => {
       city,
       experiences,
       restos,
+      users,
       'photo': false,
     })
   }).catch((error) => {
@@ -37,7 +42,7 @@ const downloadFile = async (CSRF_TOKEN) => {
   });
 
   const data = await result.json()
-  console.log('data: ', data);
+
   // let csv = Object.keys(data[0]).toString()+"\n";
   let csv = "nombre,apellidos,tel\u00E9fono,CI,regi\u00F3n,ciudad,email,g\u00E9nero,fecha de cumpleaos,direcci\u00F3n,experiencias,restaurantes\n"
 
@@ -152,7 +157,6 @@ function searchList(event, list){
           $('.'+row.className).addClass('d-none');
         else
           $('.'+row.className).removeClass('d-none');
-        console.log(row);
       });
     else
       filter.map((key, row) => {

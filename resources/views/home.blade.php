@@ -131,7 +131,7 @@
           @foreach($userList as $key => $user)
             <div class="row user-row">
               <div class="col-1 text-center">
-                <input type="checkbox" name="user-selected" id="user-selected-{{$user->id}}">
+                <input type="checkbox" class="user-selected" name="user-selected[]" id="user-selected-{{$user->id}}" value="{{$user->id}}">
               </div>
               <div class="row col-11 col-md-9 pl-0">
                 <div class="col-3 pr-0">
@@ -199,9 +199,9 @@
 
     $('#user-selected-all').change(function(){
       if($('#user-selected-all').prop('checked')){
-        $("input[name='user-selected']").prop("checked", true);
+        $(".user-selected").prop("checked", true);
       }else{
-        $("input[name='user-selected']").prop("checked", false);
+        $(".user-selected").prop("checked", false);
       }
     });
     $('#selected_region_list').change(function(){
