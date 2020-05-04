@@ -100,7 +100,7 @@
   }
 
   function getCityName($city, $region){
-    if($city != ""){
+    if($city != "" && $city != "-"){
       $cityList = collect(cityList($region));
       $cityData = $cityList->first(function ($ciudad, $key) use ($city) {
         return $ciudad["code"] == $city;
