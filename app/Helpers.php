@@ -100,13 +100,12 @@
   }
 
   function getCityName($city, $region){
-    if($city != "" && $city != "-"){
+    if($city != "" && $city != "-"  && $city != null){
       $cityList = collect(cityList($region));
-      dd($cityList);
       $cityData = $cityList->first(function ($ciudad, $key) use ($city) {
         return $ciudad["code"] == $city;
       });
-      dd($cityData);
+      dd($cityData['name']);
       return $cityData['name'];
     }
     return '-';
