@@ -106,7 +106,10 @@
         return $ciudad["code"] == $city;
       });
       dd($cityData);
-      return $cityData['name'];
+      if($cityData)
+        return $cityData['name'];
+      else
+        return '-';
     }
     return '-';
   }
