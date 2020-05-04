@@ -15,7 +15,7 @@ class Experience extends Model
     protected $fillable = [
         'experience_id', 'description', 'type'
     ];
-    public static function getList($idList, $showStar)
+    public static function getList($idList)
     {
         $list_split = explode(",",$idList);
         $experiencesId = [];
@@ -23,11 +23,8 @@ class Experience extends Model
             $result = explode("-",$experience);
             array_push($experiencesId, $result[0]);
         }
-        //$id = $key_split[2];
-        //$experiencesList[$id] = $experience[0];
-        
         $result = DB::table('experiences')
-        ->select('description')
+        ->select()
         ->whereIn('experience_id', $experiencesId)->get()->toArray();
         return array_values($result);
     }

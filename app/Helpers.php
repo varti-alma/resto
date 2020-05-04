@@ -80,15 +80,37 @@
       return "Perfil";
   }
 
-  function getNameList($nameList){
+  function getNameList($nameList, $withSeparator){
     if(count($nameList) > 0){
       $text = array();
       foreach($nameList as $key => $restoType){
         array_push($text, $restoType->description);
       }
-      return implode(', ', $text);
+
+      if($withSeparator)
+        return implode(', ', $text);
+
+      return implode(' - ', $text);
     }
-    return 'No hay tipo de restaurante informado';
+    return 'No hay datos informados';
+  }
+  function getExperiencesLevelList($nameList, $experiencesList){
+    $aux = explode(',', $experiencesList);
+
+    $experienceDetailList = [];
+    foreach($aux as $experience){
+      $experienceAux = explode('-', $experience);
+      $experienceNameList = collect($nameList);
+      $experienceId = $experienceAux[0];
+      $experienceData = $experienceNameList->first(function ($experience, $key) use ($experienceId) {
+        return $experience->experience_id == $experienceId;
+      });
+      array_push($experienceDetailList, 
+        $experienceData->description.' ('.$experienceAux[1].')'
+      );
+    }
+    return implode(' - ', $experienceDetailList);
+
   }
 
   function getCityListName($region){
